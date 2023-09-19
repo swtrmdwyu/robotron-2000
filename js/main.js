@@ -1,23 +1,5 @@
 const controle = document.querySelectorAll('[data-controle]');
-
-controle.forEach((elemento) => {
-    elemento.addEventListener('click', (evento) => {
-        calculo(evento.target.parentNode, evento.target.dataset.controle)
-    })
-})
-
-function calculo(controle, operacao) {
-
-    const peca = controle.querySelector('[data-contador]')
-
-    if (operacao === '-') {
-        peca.value = parseInt(peca.value) - 1;
-        console.log(pecas.blindagem)
-    } else {
-        peca.value = parseInt(peca.value) + 1;
-    }
-}
-
+const estatisticas = document.querySelectorAll('[data-estatistica]');
 
 // PECAS
 const pecas = {
@@ -52,4 +34,31 @@ const pecas = {
         "energia": 0,
         "velocidade": -2
     }
+}
+
+controle.forEach((elemento) => {
+    elemento.addEventListener('click', (evento) => {
+        calculo(evento.target.parentNode, evento.target.dataset.controle);
+        atualizaEstatisticas(evento.target.dataset.pecas); //dataset para selecionar atraves do data attribute.
+    })
+})
+
+function calculo(controle, operacao) {
+
+    const peca = controle.querySelector('[data-contador]')
+
+    if (operacao === '-') {
+        peca.value = parseInt(peca.value) - 1;
+    } else {
+        peca.value = parseInt(peca.value) + 1;
+    }
+}
+
+function atualizaEstatisticas(peca) {
+    // console.log(pecas[peca]) //Pesquisa dentro do objeto.
+
+    estatisticas.forEach((elemento) => {
+        // console.log(elemento.dataset.estatistica)
+        elemento.textContent = parseInt(elemento.textContent) + pecas[peca][elemento.dataset.estatistica]
+    })
 }
