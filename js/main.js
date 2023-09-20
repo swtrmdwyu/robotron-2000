@@ -38,8 +38,8 @@ const pecas = {
 
 controle.forEach((elemento) => {
     elemento.addEventListener('click', (evento) => {
-        calculo(evento.target.parentNode, evento.target.dataset.controle)
-        atualizaEstatisticas(evento.target.dataset.pecas) //dataset para selecionar atraves do data attribute.
+        let positivo = calculo(evento.target.parentNode, evento.target.dataset.controle)
+        atualizaEstatisticas(evento.target.dataset.pecas, evento.target.dataset.controle, positivo) //dataset para selecionar atraves do data attribute.
     })
 })
 
@@ -48,18 +48,30 @@ function calculo(controle, operacao) {
     const peca = controle.querySelector('[data-contador]')
 
     if (operacao === '-') {
-        peca.value = parseInt(peca.value) - 1
+        if(peca.value > 0) {
+            peca.value = parseInt(peca.value) - 1
+        } else {
+            return -1
+        }
+        
     } else {
         peca.value = parseInt(peca.value) + 1
     }
 }
 
-function atualizaEstatisticas(peca) {
+
+function atualizaEstatisticas(peca, operacao, positivo) {
     // console.log(pecas[peca]) //Pesquisa dentro do objeto.
 
     estatisticas.forEach((elemento) => {
-        // console.log(elemento.dataset.estatistica)
-        elemento.textContent = parseInt(elemento.textContent) + pecas[peca][elemento.dataset.estatistica]
+        // console.log(elemento.dataset.estatistica
+        if(parseInt(positivo) !== -1){
+            if (operacao === '-') {
+                elemento.textContent = parseInt(elemento.textContent) - pecas[peca][elemento.dataset.estatistica]     
+            } else {
+                elemento.textContent = parseInt(elemento.textContent) + pecas[peca][elemento.dataset.estatistica]
+            }
+        }  
     })
 }
 
@@ -96,8 +108,6 @@ const robo = document.querySelector('.robo')
 
 robo.addEventListener('click', () => {
     idx = parseInt(robo.dataset.cor)
-    console.log(idx)
-
     if(idx === 5){
         robo.dataset.cor = "0"
         robo.src = cores[0]["img"]   
