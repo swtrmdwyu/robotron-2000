@@ -1,5 +1,5 @@
-const controle = document.querySelectorAll('[data-controle]');
-const estatisticas = document.querySelectorAll('[data-estatistica]');
+const controle = document.querySelectorAll('[data-controle]')
+const estatisticas = document.querySelectorAll('[data-estatistica]')
 
 // PECAS
 const pecas = {
@@ -38,8 +38,8 @@ const pecas = {
 
 controle.forEach((elemento) => {
     elemento.addEventListener('click', (evento) => {
-        calculo(evento.target.parentNode, evento.target.dataset.controle);
-        atualizaEstatisticas(evento.target.dataset.pecas); //dataset para selecionar atraves do data attribute.
+        calculo(evento.target.parentNode, evento.target.dataset.controle)
+        atualizaEstatisticas(evento.target.dataset.pecas) //dataset para selecionar atraves do data attribute.
     })
 })
 
@@ -48,9 +48,9 @@ function calculo(controle, operacao) {
     const peca = controle.querySelector('[data-contador]')
 
     if (operacao === '-') {
-        peca.value = parseInt(peca.value) - 1;
+        peca.value = parseInt(peca.value) - 1
     } else {
-        peca.value = parseInt(peca.value) + 1;
+        peca.value = parseInt(peca.value) + 1
     }
 }
 
@@ -62,3 +62,48 @@ function atualizaEstatisticas(peca) {
         elemento.textContent = parseInt(elemento.textContent) + pecas[peca][elemento.dataset.estatistica]
     })
 }
+
+// Mudar a cor do rôbo
+const cores = [
+    {
+        "img": "img/azul/robotron-azul.png",
+        "cor": "azul"
+    },
+    {
+        "img": "img/vermelho/robotron-vermelho.png",
+        "cor": "vermelho"
+    },
+    {
+        "img": "img/rosa/robotron-rosa.png",
+        "cor": "rosa"
+    },
+    {
+        "img": "img/amarelo/robotron-amarelo.png",
+        "cor": "amarelo"
+    },
+    {
+        "img": "img/preto/robotron-preto.png",
+        "cor": "vermelho"
+    },
+    {
+        "img": "img/branco/robotron-branco.png",
+        "cor": "branco"
+    }
+]
+
+
+const robo = document.querySelector('.robo')
+
+robo.addEventListener('click', () => {
+    idx = parseInt(robo.dataset.cor)
+    console.log(idx)
+
+    if(idx === 5){
+        robo.dataset.cor = "0"
+        robo.src = cores[0]["img"]   
+    } else {    
+        robo.dataset.cor = (idx + 1).toString()
+        robo.src = cores[idx + 1]["img"] 
+    }     
+})
+
